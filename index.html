@@ -1,163 +1,688 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultra Pro Site</title>
-
+<title>ZeyroxMC | سرور ماینکرافت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0ea5e9, #22c55e);
-  background-size: 400% 400%;
-  animation: gradient 10s ease infinite;
-  color: white;
-  overflow-x: hidden;
-}
+  :root{
+    --bg-0:#050908;
+    --bg-1:#081310;
+    --bg-2:#0c1a16;
+    --surface: rgba(16, 32, 27, 0.55);
+    --surface-strong: rgba(16, 34, 28, 0.78);
+    --border: rgba(0,255,136,0.14);
+    --border-strong: rgba(0,255,136,0.32);
+    --neon: #00ff88;
+    --neon-dim: #05c46b;
+    --gold: #ffd166;
+    --danger: #ff4d5e;
+    --text-0:#eafff4;
+    --text-1:#a9c9bd;
+    --text-2:#6f8d82;
+    --radius: 18px;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Vazirmatn', sans-serif;
+  }
 
-@keyframes gradient {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
-}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(0,255,136,0.10), transparent 60%),
+      radial-gradient(900px 500px at 10% 10%, rgba(0,255,136,0.06), transparent 55%),
+      var(--bg-0);
+    color:var(--text-0);
+    min-height:100vh;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
 
-/* NAV */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 50px;
-  background: rgba(0,0,0,0.2);
-  backdrop-filter: blur(10px);
-}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer;}
+  ::selection{background:rgba(0,255,136,0.3); color:#fff;}
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  color: #38bdf8;
-}
+  /* ---------- Pixel-block ambient background ---------- */
+  .block-field{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:.5;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.045) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image: radial-gradient(1200px 800px at 50% 0%, black, transparent 80%);
+  }
+  .glow-orb{
+    position:fixed; width:600px; height:600px; border-radius:50%;
+    background: radial-gradient(circle, rgba(0,255,136,0.16), transparent 70%);
+    top:-200px; right:-150px; z-index:0; filter:blur(10px);
+    animation: float-orb 14s ease-in-out infinite;
+  }
+  @keyframes float-orb{
+    0%,100%{ transform:translate(0,0); }
+    50%{ transform:translate(-40px, 60px); }
+  }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  opacity: 0.8;
-}
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    backdrop-filter: blur(16px);
+    background: rgba(5,9,8,0.72);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-wrap{
+    max-width:1240px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-weight:900; font-size:1.35rem; letter-spacing:.5px;
+  }
+  .logo-cube{
+    width:30px; height:30px; border-radius:8px;
+    background: linear-gradient(145deg, var(--neon), #049e5a);
+    box-shadow:0 0 18px rgba(0,255,136,.55), inset 0 0 10px rgba(255,255,255,.25);
+    position:relative;
+    animation:spin-cube 6s linear infinite;
+  }
+  @keyframes spin-cube{
+    0%,100%{ transform:rotate(0deg) scale(1); }
+    50%{ transform:rotate(8deg) scale(1.05); }
+  }
+  .logo span.accent{color:var(--neon);}
 
-nav a:hover {
-  opacity: 1;
-}
+  nav.links{display:flex; gap:6px; align-items:center;}
+  nav.links a{
+    padding:9px 16px; border-radius:10px; font-size:.92rem; color:var(--text-1);
+    font-weight:600; transition:.25s;
+  }
+  nav.links a:hover{ color:var(--text-0); background:rgba(0,255,136,0.08); }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 120px 20px;
-}
+  .btn-play{
+    padding:10px 22px; border-radius:12px; border:1px solid var(--border-strong);
+    background: linear-gradient(180deg, rgba(0,255,136,.16), rgba(0,255,136,.04));
+    color:var(--neon); font-weight:800; font-size:.9rem;
+    box-shadow:0 0 0 rgba(0,255,136,0); transition:.3s;
+  }
+  .btn-play:hover{ box-shadow:0 0 24px rgba(0,255,136,.35); transform:translateY(-2px); }
 
-.hero h1 {
-  font-size: 55px;
-  margin-bottom: 10px;
-  animation: fadeIn 1.5s ease;
-}
+  .burger{display:none; width:38px;height:38px;border-radius:10px;background:var(--surface);border:1px solid var(--border);align-items:center;justify-content:center;}
+  .burger span, .burger span::before, .burger span::after{
+    content:''; display:block; width:16px; height:2px; background:var(--neon); position:relative;
+  }
+  .burger span::before{position:absolute; top:-5px;}
+  .burger span::after{position:absolute; top:5px;}
 
-.hero p {
-  opacity: 0.8;
-  font-size: 18px;
-}
+  /* ---------- Sections generic ---------- */
+  section{ position:relative; z-index:1; padding:100px 28px; max-width:1240px; margin:0 auto; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:.72rem; letter-spacing:2px; text-transform:uppercase;
+    color:var(--neon); background:rgba(0,255,136,.08); border:1px solid var(--border-strong);
+    padding:6px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--neon); box-shadow:0 0 8px var(--neon); animation:blink 1.6s ease-in-out infinite;}
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
 
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
+  h2.section-title{
+    font-size:clamp(1.8rem, 3vw, 2.6rem); font-weight:900; margin-bottom:10px; letter-spacing:-.5px;
+  }
+  p.section-sub{ color:var(--text-1); font-size:1rem; max-width:640px; line-height:1.9; margin-bottom:44px;}
 
-/* BUTTON */
-.btn {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 15px 30px;
-  background: white;
-  color: black;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: 0.3s;
-}
+  /* ---------- Hero ---------- */
+  .hero{ padding-top:88px; text-align:center; }
+  .hero-title{
+    font-size:clamp(2.6rem, 6vw, 5rem); font-weight:900; line-height:1.05; letter-spacing:-2px;
+  }
+  .hero-title .glow{
+    color:var(--neon);
+    text-shadow:0 0 30px rgba(0,255,136,.55), 0 0 70px rgba(0,255,136,.25);
+  }
+  .hero-desc{
+    max-width:620px; margin:22px auto 0; color:var(--text-1); font-size:1.08rem; line-height:1.9;
+  }
 
-.btn:hover {
-  transform: scale(1.1);
-  background: #38bdf8;
-}
+  .ip-box{
+    display:inline-flex; align-items:center; gap:14px; margin-top:34px;
+    background:var(--surface-strong); border:1px solid var(--border-strong);
+    padding:14px 20px; border-radius:16px; backdrop-filter:blur(14px);
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+  }
+  .ip-box .label{ font-family:var(--mono); font-size:.7rem; color:var(--text-2); text-transform:uppercase; letter-spacing:1.5px;}
+  .ip-box .value{ font-family:var(--mono); font-size:1.15rem; font-weight:700; color:var(--neon); direction:ltr;}
+  .ip-box button{
+    padding:9px 16px; border-radius:10px; border:1px solid var(--border-strong);
+    background:rgba(0,255,136,.1); color:var(--neon); font-weight:700; font-size:.82rem; font-family:var(--mono);
+    transition:.25s;
+  }
+  .ip-box button:hover{ background:rgba(0,255,136,.22); }
 
-/* CARDS */
-.container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-  padding: 60px;
-}
+  .hero-stats{
+    display:flex; justify-content:center; gap:50px; margin-top:56px; flex-wrap:wrap;
+  }
+  .hero-stat b{ display:block; font-family:var(--mono); font-size:1.8rem; font-weight:700; color:var(--text-0);}
+  .hero-stat span{ font-size:.82rem; color:var(--text-2); }
 
-.card {
-  width: 260px;
-  padding: 25px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255,255,255,0.2);
-  transition: 0.4s;
-}
+  /* ---------- Gamemode cards ---------- */
+  .modes-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; margin-top:10px;}
+  .mode-card{
+    position:relative; overflow:hidden; border-radius:var(--radius);
+    background:var(--surface); border:1px solid var(--border);
+    padding:28px 26px; backdrop-filter:blur(18px);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s;
+  }
+  .mode-card::before{
+    content:''; position:absolute; inset:0; opacity:0; transition:.4s;
+    background: radial-gradient(400px 200px at 50% 0%, rgba(0,255,136,.16), transparent 70%);
+  }
+  .mode-card:hover{ transform:translateY(-8px); border-color:var(--border-strong); box-shadow:0 24px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(0,255,136,.08);}
+  .mode-card:hover::before{ opacity:1; }
+  .mode-card.offline:hover::before{ background: radial-gradient(400px 200px at 50% 0%, rgba(255,77,94,.14), transparent 70%); }
 
-.card:hover {
-  transform: translateY(-15px) scale(1.05);
-  background: rgba(255,255,255,0.2);
-}
+  .mode-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;}
+  .mode-icon{
+    width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg, rgba(0,255,136,.18), rgba(0,255,136,.02)); border:1px solid var(--border-strong);
+    font-size:1.3rem;
+  }
+  .mode-card.offline .mode-icon{ background:linear-gradient(145deg, rgba(255,77,94,.16), rgba(255,77,94,.02)); border-color:rgba(255,77,94,.3);}
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 30px;
-  opacity: 0.7;
-}
+  .status-pill{
+    display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:.72rem;
+    padding:6px 12px; border-radius:999px; font-weight:700; letter-spacing:.5px;
+  }
+  .status-pill.on{ background:rgba(0,255,136,.1); color:var(--neon); border:1px solid rgba(0,255,136,.35);}
+  .status-pill.off{ background:rgba(255,77,94,.1); color:var(--danger); border:1px solid rgba(255,77,94,.35);}
+  .status-dot{ width:7px; height:7px; border-radius:50%; }
+  .status-pill.on .status-dot{ background:var(--neon); box-shadow:0 0 8px var(--neon); animation:pulse-dot 1.5s infinite;}
+  .status-pill.off .status-dot{ background:var(--danger); box-shadow:0 0 8px var(--danger); }
+  @keyframes pulse-dot{ 0%{box-shadow:0 0 0 0 rgba(0,255,136,.5);} 70%{box-shadow:0 0 0 8px rgba(0,255,136,0);} 100%{box-shadow:0 0 0 0 rgba(0,255,136,0);} }
+
+  .mode-name{ font-size:1.35rem; font-weight:800; margin-bottom:6px;}
+  .mode-desc{ color:var(--text-1); font-size:.88rem; line-height:1.7; margin-bottom:20px; min-height:44px;}
+  .mode-foot{ display:flex; align-items:baseline; justify-content:space-between; border-top:1px solid var(--border); padding-top:16px;}
+  .mode-count{ font-family:var(--mono); font-size:1.5rem; font-weight:700;}
+  .mode-count small{ font-size:.7rem; color:var(--text-2); font-weight:500; margin-right:6px;}
+  .mode-card.offline .mode-count{ color:var(--text-2); }
+  .mode-card:not(.offline) .mode-count{ color:var(--neon); }
+
+  .mode-join{
+    font-family:var(--mono); font-size:.78rem; font-weight:700; padding:7px 14px; border-radius:9px;
+    border:1px solid var(--border-strong); color:var(--text-0); background:transparent; transition:.25s;
+  }
+  .mode-join:hover{ background:rgba(0,255,136,.14); color:var(--neon); }
+  .mode-card.offline .mode-join{ opacity:.4; pointer-events:none; }
+
+  /* ---------- Leaderboard ---------- */
+  .lb-tabs{ display:flex; gap:10px; margin-bottom:28px; }
+  .lb-tab{
+    padding:11px 26px; border-radius:12px; font-weight:700; font-size:.9rem;
+    border:1px solid var(--border); background:var(--surface); color:var(--text-1); transition:.25s;
+  }
+  .lb-tab.active{ background:linear-gradient(180deg, rgba(0,255,136,.18), rgba(0,255,136,.05)); color:var(--neon); border-color:var(--border-strong);}
+
+  .lb-panel{ display:none; }
+  .lb-panel.active{ display:block; animation:fade-up .45s ease; }
+  @keyframes fade-up{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  .podium{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-bottom:20px;}
+  .podium-card{
+    position:relative; text-align:center; padding:26px 16px 20px; border-radius:16px;
+    background:var(--surface-strong); border:1px solid var(--border-strong); backdrop-filter:blur(16px);
+    transition:.3s;
+  }
+  .podium-card:hover{ transform:translateY(-6px); }
+  .podium-card.rank-1{ order:2; padding-top:38px; box-shadow:0 0 40px rgba(0,255,136,.14);}
+  .podium-card.rank-2{ order:1; }
+  .podium-card.rank-3{ order:3; }
+  .crown{ font-size:1.6rem; margin-bottom:6px; filter:drop-shadow(0 0 10px rgba(255,209,102,.6)); }
+  .podium-rank{ font-family:var(--mono); font-size:.72rem; color:var(--text-2); letter-spacing:1px;}
+  .podium-name{ font-weight:800; font-size:1.1rem; margin:8px 0 4px;}
+  .podium-value{ font-family:var(--mono); font-weight:700; color:var(--neon); font-size:1.05rem;}
+  .podium-card.rank-1 .podium-name{ color:var(--gold); }
+  .podium-avatar{
+    width:56px; height:56px; margin:0 auto 10px; border-radius:12px;
+    background:linear-gradient(145deg, rgba(0,255,136,.25), rgba(0,255,136,.02)); border:1px solid var(--border-strong);
+  }
+
+  .lb-table{
+    border-radius:16px; overflow:hidden; border:1px solid var(--border); background:var(--surface); backdrop-filter:blur(16px);
+  }
+  .lb-row{
+    display:grid; grid-template-columns:60px 1fr 140px; align-items:center; gap:14px;
+    padding:15px 22px; border-bottom:1px solid var(--border); transition:.2s;
+  }
+  .lb-row:last-child{ border-bottom:none; }
+  .lb-row:hover{ background:rgba(0,255,136,.05); }
+  .lb-rank{ font-family:var(--mono); font-weight:700; color:var(--text-2); }
+  .lb-user{ display:flex; align-items:center; gap:12px; font-weight:700;}
+  .lb-user .dot-avatar{ width:34px; height:34px; border-radius:9px; background:linear-gradient(145deg, rgba(0,255,136,.2), transparent); border:1px solid var(--border);}
+  .lb-value{ font-family:var(--mono); font-weight:700; color:var(--neon); text-align:left; direction:ltr;}
+
+  /* ---------- Rules ---------- */
+  .rules-cats{ display:flex; gap:12px; margin-bottom:30px; flex-wrap:wrap;}
+  .cat-chip{
+    font-family:var(--mono); font-size:.75rem; padding:8px 16px; border-radius:999px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text-1);
+  }
+  .cat-chip.cheat{ border-color:rgba(255,77,94,.35); color:#ff8b96;}
+  .cat-chip.exploit{ border-color:rgba(255,209,102,.35); color:var(--gold);}
+  .cat-chip.trade{ border-color:rgba(0,255,136,.35); color:var(--neon);}
+
+  .rules-list{ display:flex; flex-direction:column; gap:12px; max-height:640px; overflow-y:auto; padding-left:6px; }
+  .rules-list::-webkit-scrollbar{ width:6px; }
+  .rules-list::-webkit-scrollbar-thumb{ background:rgba(0,255,136,.3); border-radius:10px; }
+  .rules-list::-webkit-scrollbar-track{ background:transparent; }
+
+  .rule-row{
+    display:grid; grid-template-columns:44px 1fr 100px; align-items:flex-start; gap:16px;
+    padding:16px 20px; border-radius:14px; background:var(--surface); border:1px solid var(--border);
+    transition:.25s;
+  }
+  .rule-row:hover{ border-color:var(--border-strong); background:var(--surface-strong); }
+  .rule-row.critical{ border-color:rgba(255,77,94,.4); background:rgba(255,77,94,.06); }
+  .rule-num{ font-family:var(--mono); font-weight:800; font-size:1.1rem; color:var(--text-2); }
+  .rule-row.critical .rule-num{ color:var(--danger); }
+  .rule-text{ font-size:.95rem; line-height:1.85; color:var(--text-0); }
+  .rule-text b{ color:var(--neon); }
+  .rule-row.critical .rule-text b{ color:var(--danger); }
+  .rule-tag{
+    font-family:var(--mono); font-size:.65rem; padding:5px 10px; border-radius:8px; text-align:center;
+    height:fit-content; font-weight:700; letter-spacing:.5px; justify-self:start;
+  }
+  .rule-tag.cheat{ background:rgba(255,77,94,.12); color:#ff8b96; }
+  .rule-tag.exploit{ background:rgba(255,209,102,.12); color:var(--gold); }
+  .rule-tag.trade{ background:rgba(0,255,136,.12); color:var(--neon); }
+  .rule-tag.general{ background:rgba(255,255,255,.06); color:var(--text-2); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    position:relative; z-index:1; border-top:1px solid var(--border);
+    background: linear-gradient(180deg, transparent, rgba(0,255,136,.03));
+    padding:70px 28px 30px;
+  }
+  .footer-grid{
+    max-width:1240px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:40px;
+    padding-bottom:40px; border-bottom:1px solid var(--border);
+  }
+  .footer-desc{ color:var(--text-1); font-size:.88rem; line-height:1.9; margin-top:14px; max-width:280px;}
+  .footer-title{ font-weight:800; font-size:.85rem; letter-spacing:.5px; margin-bottom:16px; color:var(--text-0);}
+  .footer-links li{ margin-bottom:11px; }
+  .footer-links a{ color:var(--text-1); font-size:.88rem; transition:.2s; }
+  .footer-links a:hover{ color:var(--neon); }
+
+  .socials{ display:flex; gap:10px; margin-top:14px; }
+  .social-btn{
+    width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border); background:var(--surface); transition:.25s;
+  }
+  .social-btn:hover{ border-color:var(--border-strong); background:rgba(0,255,136,.1); transform:translateY(-3px);}
+  .social-btn svg{ width:17px; height:17px; fill:var(--text-1); }
+  .social-btn:hover svg{ fill:var(--neon); }
+
+  .trust-box{
+    display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px;
+    background:var(--surface); border:1px solid var(--border); margin-top:14px; font-size:.8rem; color:var(--text-1);
+  }
+  .trust-box b{ color:var(--neon); font-family:var(--mono); }
+
+  .footer-bottom{
+    max-width:1240px; margin:26px auto 0; display:flex; justify-content:space-between; align-items:center;
+    font-size:.8rem; color:var(--text-2); flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    nav.links{ display:none; }
+    .burger{ display:flex; }
+    .modes-grid{ grid-template-columns:1fr; }
+    .podium{ grid-template-columns:1fr; }
+    .podium-card.rank-1, .podium-card.rank-2, .podium-card.rank-3{ order:0; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+    section{ padding:70px 20px; }
+  }
+  @media (max-width:560px){
+    .footer-grid{ grid-template-columns:1fr; }
+    .ip-box{ flex-direction:column; align-items:stretch; text-align:center; }
+    .lb-row{ grid-template-columns:36px 1fr 90px; padding:14px; }
+    .rule-row{ grid-template-columns:30px 1fr; }
+    .rule-tag{ grid-column:2; }
+  }
 </style>
-
 </head>
-
 <body>
 
-<nav>
-  <div class="logo">⚡ UltraSite</div>
-  <div>
-    <a href="#">Home</a>
-    <a href="#">Features</a>
-    <a href="#">Contact</a>
+<div class="block-field"></div>
+<div class="glow-orb"></div>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo"><div class="logo-cube"></div>Zeyrox<span class="accent">MC</span></div>
+    <nav class="links">
+      <a href="#home">خانه</a>
+      <a href="#leaderboard">لیدربورد</a>
+      <a href="#rules">قوانین</a>
+      <a href="#footer">درباره ما</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="btn-play" href="#home">اتصال به سرور</a>
+      <div class="burger"><span></span></div>
+    </div>
   </div>
-</nav>
+</header>
 
-<div class="hero">
-  <h1>🔥 خفن‌ترین سایت دنیا</h1>
-  <p>این سایت با انیمیشن، افکت و طراحی حرفه‌ای ساخته شده 😎</p>
-  <a class="btn" href="#">شروع کن</a>
-</div>
+<!-- ================= HOME ================= -->
+<section id="home" class="hero">
+  <div class="eyebrow"><span class="dot"></span> شبکه رسمی ماینکرافت</div>
+  <h1 class="hero-title">به <span class="glow">ZeyroxMC</span> خوش اومدی</h1>
+  <p class="hero-desc">
+    تجربه‌ای رقابتی، پایدار و بدون تقلب از دنیای ماینکرافت. با هزاران بازیکن فعال در Practice و SMP همین حالا وارد شو و جایگاهت رو در لیدربورد بساز.
+  </p>
 
-<div class="container">
-  <div class="card">
-    <h3>⚡ سرعت بالا</h3>
-    <p>بهینه و سبک برای اجرای سریع</p>
+  <div class="ip-box">
+    <div>
+      <div class="label">آی‌پی سرور</div>
+      <div class="value">play.zeyroxmc.com</div>
+    </div>
+    <button onclick="copyIP()" id="copyBtn">کپی آی‌پی</button>
   </div>
 
-  <div class="card">
-    <h3>🎮 گیمینگ</h3>
-    <p>مناسب برای سرورهای Minecraft و Discord</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><b id="statOnline">320</b><span>بازیکن آنلاین</span></div>
+    <div class="hero-stat"><b>3</b><span>گیم‌مود فعال</span></div>
+    <div class="hero-stat"><b>24/7</b><span>آپ‌تایم سرور</span></div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="eyebrow"><span class="dot"></span> گیم‌مودها</div>
+  <h2 class="section-title">وضعیت زنده سرورها</h2>
+  <p class="section-sub">هر گیم‌مود به‌صورت مستقل مانیتور می‌شود و وضعیت آن به‌طور لحظه‌ای به‌روزرسانی می‌گردد.</p>
+
+  <div class="modes-grid">
+    <!-- Pillars - Offline -->
+    <div class="mode-card offline">
+      <div class="mode-top">
+        <div class="mode-icon">🗼</div>
+        <div class="status-pill off"><span class="status-dot"></span>آفلاین</div>
+      </div>
+      <div class="mode-name">Pillars</div>
+      <div class="mode-desc">نبرد روی ستون‌ها، حذفی و پرهیجان. به‌زودی با آپدیت جدید برمی‌گردد.</div>
+      <div class="mode-foot">
+        <div class="mode-count">--<small>بازیکن</small></div>
+        <button class="mode-join">غیرفعال</button>
+      </div>
+    </div>
+
+    <!-- Practice - Online -->
+    <div class="mode-card">
+      <div class="mode-top">
+        <div class="mode-icon">⚔️</div>
+        <div class="status-pill on"><span class="status-dot"></span>آنلاین</div>
+      </div>
+      <div class="mode-name">Practice</div>
+      <div class="mode-desc">تمرین PvP با رنکینگ اختصاصی، دوئل‌های زنده و رقابت مستقیم با بازیکنان برتر.</div>
+      <div class="mode-foot">
+        <div class="mode-count">98<small>بازیکن</small></div>
+        <button class="mode-join">ورود</button>
+      </div>
+    </div>
+
+    <!-- SMP - Online -->
+    <div class="mode-card">
+      <div class="mode-top">
+        <div class="mode-icon">🏰</div>
+        <div class="status-pill on"><span class="status-dot"></span>آنلاین</div>
+      </div>
+      <div class="mode-name">SMP</div>
+      <div class="mode-desc">دنیای بقای گروهی با اقتصاد واقعی، تجارت آزاد و کلن‌های فعال.</div>
+      <div class="mode-foot">
+        <div class="mode-count">222<small>بازیکن</small></div>
+        <button class="mode-join">ورود</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEADERBOARD ================= -->
+<section id="leaderboard">
+  <div class="eyebrow"><span class="dot"></span> رتبه‌بندی</div>
+  <h2 class="section-title">لیدربورد ZeyroxMC</h2>
+  <p class="section-sub">برترین بازیکنان هر گیم‌مود، بر اساس عملکرد و ثروت درون‌بازی رتبه‌بندی می‌شوند.</p>
+
+  <div class="lb-tabs">
+    <button class="lb-tab active" onclick="switchTab('smp')">SMP</button>
+    <button class="lb-tab" onclick="switchTab('practice')">Practice</button>
   </div>
 
-  <div class="card">
-    <h3>🚀 حرفه‌ای</h3>
-    <p>طراحی در سطح سایت‌های واقعی</p>
+  <!-- SMP PANEL -->
+  <div class="lb-panel active" id="panel-smp">
+    <div class="podium">
+      <div class="podium-card rank-2">
+        <div class="podium-rank">#2</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">Kavenix</div>
+        <div class="podium-value">$482,000</div>
+      </div>
+      <div class="podium-card rank-1">
+        <div class="crown">👑</div>
+        <div class="podium-rank">#1</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">Zeyrox_King</div>
+        <div class="podium-value">$941,250</div>
+      </div>
+      <div class="podium-card rank-3">
+        <div class="podium-rank">#3</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">NightHawk</div>
+        <div class="podium-value">$367,400</div>
+      </div>
+    </div>
+    <div class="lb-table" id="smpTable"></div>
   </div>
-</div>
 
-<footer>
-  ساخته شده با ❤️ توسط تو
+  <!-- PRACTICE PANEL -->
+  <div class="lb-panel" id="panel-practice">
+    <div class="podium">
+      <div class="podium-card rank-2">
+        <div class="podium-rank">#2</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">Ferixx</div>
+        <div class="podium-value">2,410 ELO</div>
+      </div>
+      <div class="podium-card rank-1">
+        <div class="crown">👑</div>
+        <div class="podium-rank">#1</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">ShadowBlade</div>
+        <div class="podium-value">2,780 ELO</div>
+      </div>
+      <div class="podium-card rank-3">
+        <div class="podium-rank">#3</div>
+        <div class="podium-avatar"></div>
+        <div class="podium-name">Arcadyy</div>
+        <div class="podium-value">2,155 ELO</div>
+      </div>
+    </div>
+    <div class="lb-table" id="practiceTable"></div>
+  </div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section id="rules">
+  <div class="eyebrow"><span class="dot"></span> قوانین سرور</div>
+  <h2 class="section-title">قوانین ZeyroxMC</h2>
+  <p class="section-sub">رعایت قوانین زیر برای تمام بازیکنان الزامی است. نقض هر یک از موارد بحرانی می‌تواند منجر به بن دائم شود.</p>
+
+  <div class="rules-cats">
+    <div class="cat-chip cheat">تقلب / هک</div>
+    <div class="cat-chip exploit">اکسپلویت</div>
+    <div class="cat-chip trade">تجارت</div>
+  </div>
+
+  <div class="rules-list" id="rulesList"></div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="logo"><div class="logo-cube"></div>Zeyrox<span class="accent">MC</span></div>
+      <p class="footer-desc">شبکه رسمی ماینکرافت با تمرکز بر تجربه‌ای عادلانه، پایدار و رقابتی برای همه بازیکنان.</p>
+      <div class="socials">
+        <a class="social-btn" href="#" aria-label="دیسکورد"><svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.6 3c-.2.4-.5 1-.7 1.4a18 18 0 0 0-5.8 0A13 13 0 0 0 8.4 3a19.9 19.9 0 0 0-4.7 1.4C1 9 .3 13.5.6 18a20 20 0 0 0 6 3c.5-.7.9-1.4 1.2-2.2-.7-.3-1.3-.6-1.9-1l.5-.4a14.2 14.2 0 0 0 11.2 0l.5.4c-.6.4-1.2.7-1.9 1 .3.8.7 1.5 1.2 2.2a20 20 0 0 0 6-3c.4-5.2-.9-9.7-3.1-13.6ZM9 15c-.9 0-1.6-.9-1.6-2s.7-2 1.6-2 1.6.9 1.6 2-.7 2-1.6 2Zm6 0c-.9 0-1.6-.9-1.6-2s.7-2 1.6-2 1.6.9 1.6 2-.7 2-1.6 2Z"/></svg></a>
+        <a class="social-btn" href="#" aria-label="اینستاگرام"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 2 .25 2.7.53a5.5 5.5 0 0 1 2 1.3 5.5 5.5 0 0 1 1.3 2c.28.7.47 1.5.53 2.7.06 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.06 1.2-.25 2-.53 2.7a5.5 5.5 0 0 1-1.3 2 5.5 5.5 0 0 1-2 1.3c-.7.28-1.5.47-2.7.53-1.2.06-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.06-2-.25-2.7-.53a5.5 5.5 0 0 1-2-1.3 5.5 5.5 0 0 1-1.3-2c-.28-.7-.47-1.5-.53-2.7C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.06-1.2.25-2 .53-2.7a5.5 5.5 0 0 1 1.3-2 5.5 5.5 0 0 1 2-1.3c.7-.28 1.5-.47 2.7-.53C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.2-1.9.34-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.14.4-.3 1-.34 1.9C3 9.5 3 9.9 3 13s0 3.5.07 4.7c.05 1 .2 1.6.34 1.9.2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.14 1 .3 1.9.34 1.2.06 1.6.07 4.7.07s3.5 0 4.7-.07c1-.05 1.6-.2 1.9-.34.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.14-.4.3-1 .34-1.9.06-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.05-1-.2-1.6-.34-1.9a3.7 3.7 0 0 0-.8-1.2 3.7 3.7 0 0 0-1.2-.8c-.4-.14-1-.3-1.9-.34C15.5 4 15.1 4 12 4Zm0 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.8a3.7 3.7 0 1 0 0 7.4 3.7 3.7 0 0 0 0-7.4Zm5.7-2a1.3 1.3 0 1 1-2.6 0 1.3 1.3 0 0 1 2.6 0Z"/></svg></a>
+        <a class="social-btn" href="#" aria-label="تلگرام"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 2.7 11.7c-1 .4-1 1.7.1 2l4.6 1.5 1.8 5.6c.2.7 1.1.9 1.6.3l2.6-2.9 4.9 3.6c.7.5 1.7.1 1.9-.7L23.9 5.6c.2-.9-.7-1.7-2-1.3ZM19 7.4l-8.6 7.8-.4 3.7-1.6-5 10-8.2c.4-.3.8.2.6.5Z"/></svg></a>
+        <a class="social-btn" href="#" aria-label="یوتیوب"><svg viewBox="0 0 24 24"><path d="M22 12s0-3.4-.4-5c-.3-.9-1-1.6-1.9-1.9C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.7.4c-.9.3-1.6 1-1.9 1.9C2 8.6 2 12 2 12s0 3.4.4 5c.3.9 1 1.6 1.9 1.9 1.8.4 7.7.4 7.7.4s5.9 0 7.7-.4c.9-.3 1.6-1 1.9-1.9.4-1.6.4-5 .4-5ZM10 15.3V8.7l6 3.3-6 3.3Z"/></svg></a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-title">گیم‌مودها</div>
+      <ul class="footer-links">
+        <li><a href="#modes">SMP</a></li>
+        <li><a href="#modes">Pillars</a></li>
+        <li><a href="#modes">Practice</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-title">لینک‌های سریع</div>
+      <ul class="footer-links">
+        <li><a href="#leaderboard">لیدربورد</a></li>
+        <li><a href="#rules">قوانین سرور</a></li>
+        <li><a href="#">فروشگاه</a></li>
+        <li><a href="#">پشتیبانی</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-title">پرداخت امن</div>
+      <p style="color:var(--text-1); font-size:.85rem; line-height:1.8;">تمامی تراکنش‌های فروشگاه از طریق درگاه‌های معتبر پرداخت انجام می‌شود.</p>
+      <div class="trust-box">🔒 پرداخت امن با <b>زیبال</b></div>
+      <div class="trust-box">✅ ضمانت بازگشت وجه</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© ۲۰۲۶ ZeyroxMC — تمامی حقوق محفوظ است.</span>
+    <span>این سرور توسط Mojang/Microsoft تأیید یا اسپانسر نشده است.</span>
+  </div>
 </footer>
+
+<script>
+  // ----- Copy IP -----
+  function copyIP(){
+    navigator.clipboard.writeText('play.zeyroxmc.com').then(()=>{
+      const btn = document.getElementById('copyBtn');
+      const original = btn.textContent;
+      btn.textContent = 'کپی شد ✓';
+      setTimeout(()=> btn.textContent = original, 1600);
+    });
+  }
+
+  // ----- Leaderboard tabs -----
+  function switchTab(tab){
+    document.querySelectorAll('.lb-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.lb-panel').forEach(p=>p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('panel-'+tab).classList.add('active');
+  }
+
+  // ----- Build tables 4-10 -----
+  const smpData = [
+    ['Bloxxer_', '$298,900'],
+    ['Ravenwood', '$254,300'],
+    ['MysticFox', '$211,750'],
+    ['DustyRealm', '$188,020'],
+    ['Kryonix', '$165,440'],
+    ['Ashlar_', '$142,900'],
+    ['Voltrex', '$121,300'],
+  ];
+  const practiceData = [
+    ['NullPointer', '2,040 ELO'],
+    ['Quickscar', '1,988 ELO'],
+    ['Bexley', '1,905 ELO'],
+    ['Draymond_', '1,840 ELO'],
+    ['Ironclad', '1,777 ELO'],
+    ['Fenwick', '1,690 ELO'],
+    ['Talonrise', '1,602 ELO'],
+  ];
+
+  function renderTable(id, data, startRank){
+    const el = document.getElementById(id);
+    el.innerHTML = data.map((row, i)=>`
+      <div class="lb-row">
+        <div class="lb-rank">#${startRank+i}</div>
+        <div class="lb-user"><div class="dot-avatar"></div>${row[0]}</div>
+        <div class="lb-value">${row[1]}</div>
+      </div>
+    `).join('');
+  }
+  renderTable('smpTable', smpData, 4);
+  renderTable('practiceTable', practiceData, 4);
+
+  // ----- Rules data -----
+  const rules = [
+    {n:1, tag:'general', text:'به تمام اعضای سرور با <b>احترام</b> رفتار کنید؛ توهین، نژادپرستی و تبعیض ممنوع است.'},
+    {n:2, tag:'general', text:'اسپم کردن در چت عمومی یا کانال‌های دیسکورد مجاز نیست.'},
+    {n:3, tag:'cheat', text:'استفاده از هرگونه <b>کلاینت هک</b> (Kill Aura، Reach، Fly و مشابه) منجر به بن دائم می‌شود.'},
+    {n:4, tag:'cheat', text:'استفاده از X-Ray یا ماد‌های مشابه برای دیدن منابع زیرزمینی ممنوع و قابل شناسایی است.'},
+    {n:5, tag:'cheat', text:'اتوکلیکر و ماکروهای خودکار برای PvP در Practice ممنوع است.'},
+    {n:6, tag:'exploit', text:'استفاده از باگ‌های دوپلیکیت آیتم (<b>Dupe</b>) شدیدترین جرم سرور محسوب شده و بن دائم و بدون بازگشت دارد.'},
+    {n:7, tag:'exploit', text:'سوءاستفاده از باگ‌های چانک یا کرش کردن سرور به‌صورت عمدی ممنوع است.'},
+    {n:8, tag:'exploit', text:'استفاده از باگ‌های دنیای Nether/End برای عبور از محدودیت‌های نقشه غیرمجاز است.'},
+    {n:9, tag:'exploit', text:'دستکاری پکت‌های شبکه یا ارسال داده‌های غیرمجاز به سرور اکیداً ممنوع است.'},
+    {n:10, tag:'trade', text:'معامله آیتم‌های درون‌بازی در ازای پول واقعی (<b>IRL Trading</b>) مجاز نیست و منجر به مسدودسازی می‌شود.'},
+    {n:11, tag:'trade', text:'فروش اکانت یا رنک سرور به دیگران بدون تأیید تیم پشتیبانی ممنوع است.'},
+    {n:12, tag:'trade', text:'کلاهبرداری در معاملات داخل سرور (Scam) با مدرک، بن دائم به همراه دارد.'},
+    {n:13, tag:'general', text:'جعل هویت اعضای تیم مدیریت یا استاف سرور ممنوع است.'},
+    {n:14, tag:'general', text:'تبلیغ سرورهای دیگر در چت یا دیسکورد ZeyroxMC مجاز نیست.'},
+    {n:15, tag:'cheat', text:'استفاده از هرگونه Alt-Account برای دور زدن بن یا محدودیت‌ها ممنوع است.'},
+    {n:16, tag:'exploit', text:'سوءاستفاده از سیستم اقتصادی سرور (مثل باگ فروشگاه) باید فوراً گزارش شود، نه سوءاستفاده.'},
+    {n:17, tag:'general', text:'ساخت بنای توهین‌آمیز، نامناسب یا حاوی محتوای NSFW در دنیای SMP ممنوع است.'},
+    {n:18, tag:'general', text:'مسدود کردن ورودی/خروجی روستاییان یا بازیکنان دیگر بدون اجازه ممنوع است (Griefing با اجازه استثناست).'},
+    {n:19, tag:'trade', text:'حراج آیتم‌های نایاب باید در چنل مخصوص Trade انجام شود، نه چت عمومی.'},
+    {n:20, tag:'cheat', text:'استفاده از هرگونه ماد Freecam یا ESP برای دیدن بازیکنان از پشت دیوار ممنوع است.'},
+    {n:21, tag:'exploit', text:'استفاده از لگ‌مشین یا سازه‌هایی با هدف کرش سرور اکیداً ممنوع است.'},
+    {n:22, tag:'general', text:'حساب کاربری خود را در اختیار افراد دیگر قرار ندهید؛ مسئولیت هر اقدام با صاحب اکانت است.'},
+    {n:23, tag:'trade', text:'تمام معاملات پرمخاطره باید با حضور میانجی (Middleman) استاف انجام شود.'},
+    {n:24, tag:'cheat', text:'استفاده از تقلب صوتی/تصویری برای شناسایی موقعیت بازیکنان دیگر ممنوع است.'},
+    {n:25, tag:'general', text:'اسپم تیکت پشتیبانی یا گزارش‌های کذب باعث محدودیت در ارسال تیکت می‌شود.'},
+    {n:26, tag:'exploit', text:'استفاده از باگ تله‌پورت برای عبور از مناطق محافظت‌شده (Claim) ممنوع است.'},
+    {n:27, tag:'general', text:'کلن‌ها موظف به رعایت قوانین جنگ کلنی (Clan War) اعلام‌شده توسط استاف هستند.'},
+    {n:28, tag:'trade', text:'تراکنش‌های فروشگاه رسمی غیرقابل بازگشت است مگر با تأیید تیم پشتیبانی مالی.'},
+    {n:29, tag:'cheat', text:'هرگونه استفاده از نرم‌افزار جانبی برای تغییر رفتار بازی (Timer، Velocity و مشابه) ممنوع است.'},
+    {n:30, tag:'general', text:'عدم آگاهی از قوانین دلیلی برای معافیت از مجازات نیست؛ مطالعه کامل این صفحه الزامی است.'},
+  ];
+
+  const tagLabel = {cheat:'تقلب', exploit:'اکسپلویت', trade:'تجارت', general:'عمومی'};
+  const criticalRules = [3,4,6,10,29];
+
+  const rulesList = document.getElementById('rulesList');
+  rulesList.innerHTML = rules.map(r => `
+    <div class="rule-row ${criticalRules.includes(r.n) ? 'critical' : ''}">
+      <div class="rule-num">${String(r.n).padStart(2,'0')}</div>
+      <div class="rule-text">${r.text}</div>
+      <div class="rule-tag ${r.tag}">${tagLabel[r.tag]}</div>
+    </div>
+  `).join('');
+
+  // ----- live online counter subtle fluctuation -----
+  const onlineEl = document.getElementById('statOnline');
+  setInterval(()=>{
+    const base = 320;
+    const variance = Math.floor(Math.random()*7)-3;
+    onlineEl.textContent = base + variance;
+  }, 4000);
+</script>
 
 </body>
 </html>

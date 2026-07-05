@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultra Pro Site</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0ea5e9, #22c55e);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+  color: white;
+  overflow-x: hidden;
+}
+
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  opacity: 0.8;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+.hero h1 {
+  font-size: 55px;
+  margin-bottom: 10px;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero p {
+  opacity: 0.8;
+  font-size: 18px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* BUTTON */
+.btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 15px 30px;
+  background: white;
+  color: black;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  background: #38bdf8;
+}
+
+/* CARDS */
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 60px;
+}
+
+.card {
+  width: 260px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.05);
+  background: rgba(255,255,255,0.2);
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.7;
+}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">⚡ UltraSite</div>
+  <div>
+    <a href="#">Home</a>
+    <a href="#">Features</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>🔥 خفن‌ترین سایت دنیا</h1>
+  <p>این سایت با انیمیشن، افکت و طراحی حرفه‌ای ساخته شده 😎</p>
+  <a class="btn" href="#">شروع کن</a>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>⚡ سرعت بالا</h3>
+    <p>بهینه و سبک برای اجرای سریع</p>
+  </div>
+
+  <div class="card">
+    <h3>🎮 گیمینگ</h3>
+    <p>مناسب برای سرورهای Minecraft و Discord</p>
+  </div>
+
+  <div class="card">
+    <h3>🚀 حرفه‌ای</h3>
+    <p>طراحی در سطح سایت‌های واقعی</p>
+  </div>
+</div>
+
+<footer>
+  ساخته شده با ❤️ توسط تو
+</footer>
+
+</body>
+</html>
